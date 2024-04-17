@@ -37,12 +37,14 @@ public class EnqueryController {
 		boolean status = enquiriesService.addEnquiries(enq, Cid);
 
 		if (status) {
+			model.addAttribute("enq", new Enquiries());
 			model.addAttribute("msg", "Saved Successfully");
 		} else {
+			model.addAttribute("enq", new Enquiries());
 			model.addAttribute("emsg", "Failed to save");
 		}
 
-		model.addAttribute("enq", new Enquiries());
+//		model.addAttribute("enq", new Enquiries());
 		return "addEnq";
 	}
 
@@ -53,7 +55,7 @@ public class EnqueryController {
 		HttpSession session = req.getSession(false);
 		Integer Cid = (Integer) session.getAttribute("cid");
 
-		List<Enquiries> list = enquiriesService.getEnquiry(new Enquiries(), Cid);
+		List<Enquiries> list = enquiriesService.getEnquiries(new Enquiries(), Cid);
 		model.addAttribute("enqs", list);
 
 		model.addAttribute("enq", new Enquiries());
@@ -67,16 +69,16 @@ public class EnqueryController {
 		HttpSession session = req.getSession(false);
 		Integer Cid = (Integer) session.getAttribute("cid");
 
-		List<Enquiries> list = enquiriesService.getEnquiry(enq, Cid);
+		List<Enquiries> list = enquiriesService.getEnquiries(enq, Cid);
 		model.addAttribute("enqs", list);
-		model.addAttribute("enq", new Enquiries());
+//		model.addAttribute("enq", new Enquiries());
 		return "viewEnquiries";
 	}
 
 	// edit & update enq
 	@GetMapping("/edit")
 	public String editEnquiry(@RequestParam("id") Integer enqId, Model model) {
-		Enquiries enquiry = enquiriesService.getEnquiries(enqId);
+		Enquiries enquiry = enquiriesService.updateEnquiries(enqId);
 		model.addAttribute("enq", enquiry);
 		return "addEnq";
 	}

@@ -46,28 +46,27 @@ public class EnqueryServiceImpl implements EnquirieService {
 		enquiries.setCounsellers(counsellers);
 
 		Enquiries save = enquiriesRepo.save(enquiries);
-		return save.getEnqId() != null;
+		return save.getEnqId()!=null;
 	}
 
 	@Override
-	public List<Enquiries>getEnquiry(Enquiries enquery, Integer counsellerId) {
-
+	public List<Enquiries>getEnquiries(Enquiries enquiries, Integer counsellerId) {
 		Counsellers counsellers = new Counsellers();
 		counsellers.setCounseller_Id(counsellerId);
 
 		Enquiries searchCriteria = new Enquiries();
 		searchCriteria.setCounsellers(counsellers);
 
-		if (null!=enquery.getCourse() && ! "".equals(enquery.getCourse())) {
-			searchCriteria.setCourse(enquery.getCourse());
+		if (null!=enquiries.getCourse() && ! "".equals(enquiries.getCourse())) {
+			searchCriteria.setCourse(enquiries.getCourse());
 		}
 
-		if (null!=enquery.getMode() && ! "".equals(enquery.getMode())) {
-			searchCriteria.setMode(enquery.getMode());
+		if (null!=enquiries.getMode() && ! "".equals(enquiries.getMode())) {
+			searchCriteria.setMode(enquiries.getMode());
 		}
 
-		if (null!=enquery.getStatus() && ! "".equals(enquery.getStatus())) {
-			searchCriteria.setStatus(enquery.getStatus());
+		if (null!=enquiries.getStatus() && ! "".equals(enquiries.getStatus())) {
+			searchCriteria.setStatus(enquiries.getStatus());
 		}
 
 		Example<Enquiries> of = Example.of(searchCriteria);
@@ -75,7 +74,7 @@ public class EnqueryServiceImpl implements EnquirieService {
 	}
 
 	@Override
-	public Enquiries getEnquiries(Integer enqId) {
+	public Enquiries updateEnquiries(Integer enqId) {
 		
 		Optional<Enquiries> id = enquiriesRepo.findById(enqId);
 		Enquiries enquery=null;

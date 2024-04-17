@@ -71,6 +71,7 @@ public class CounsellerController {
 			model.addAttribute("counseller", new Counsellers());
 			model.addAttribute("msg", "Counsellers Saved");
 		} else {
+			model.addAttribute("counseller", new Counsellers());
 			model.addAttribute("emsg", "Filed to Saved");
 		}
 		return "registerview";

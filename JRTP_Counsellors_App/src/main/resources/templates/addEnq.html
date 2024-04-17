@@ -57,7 +57,10 @@
 		
 		<font color="green"><p th:text="${msg}"></p></font>
 		<font color="red"><p th:text="${emsg}"></p></font>
-
+	
+	<form th:object="${enq}" th:action="@{/enquery}" method="post">
+            <input type="hidden" th:field="*{enqId}"/>
+	
 		<form th:action="@{/enquery}" th:object="${enq}" method="post">
 			<table>
 				<tr>
