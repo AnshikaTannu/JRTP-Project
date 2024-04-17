@@ -11,9 +11,9 @@ public interface EnquirieService {
 	
 	public boolean addEnquiries(Enquiries enqueries, Integer counsellerId);
 	
-	public List<Enquiries> getEnquiry(Enquiries enquery ,Integer  counsellerId);
+	public List<Enquiries> getEnquiries(Enquiries enqueries ,Integer  counsellerId);
 	
-	public Enquiries getEnquiries(Integer enqId);
+	public Enquiries updateEnquiries(Integer enqId);
 
 
 }

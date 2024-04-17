@@ -18,12 +18,12 @@ public class ConsellerServiceImpl implements CounsellerService {
 		Counsellers findByEmail = counsellerRepo.findByEmail(counseller.getEmail());
 		if(findByEmail !=null) {
 			return false;
-		}
+		}else {
 		
 		Counsellers save = counsellerRepo.save(counseller);
 		return save.getCounseller_Id() != null;
 	}
-
+	}
 	@Override
 	public Counsellers getCounsellers(String email, String pwd) {
 		return counsellerRepo.findByEmailAndPwd(email, pwd);
