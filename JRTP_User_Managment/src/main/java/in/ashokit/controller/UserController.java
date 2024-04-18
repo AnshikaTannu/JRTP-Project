@@ -1,4 +1,4 @@
- package in.ashokit.controller;
+package in.ashokit.controller;
 
 import java.util.Map;
 
@@ -15,12 +15,17 @@ import in.ashokit.dto.RegisterDto;
 import in.ashokit.dto.ResetPwdDto;
 import in.ashokit.dto.UserDto;
 import in.ashokit.service.UserService;
+import in.ashokit.util.AppConstant;
+import in.ashokit.util.AppProperties;
 
 @Controller
 public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	public AppProperties prop;
 
 	@GetMapping("/register")
 	public String registerPage(Model model) {
@@ -46,19 +51,22 @@ public class UserController {
 
 	@PostMapping("/register")
 	public String register(RegisterDto regDto, Model model) {
+		model.addAttribute("countries", userService.getCountries());
+		Map<String, String> messages = prop.getMessages();
+
 		UserDto user = userService.getUser(regDto.getEmail());
 		if (user != null) {
-			model.addAttribute("emsg", "Duplicate Email");
+			model.addAttribute(AppConstant.ERROR_MSG, messages.get("dupEmail"));
 			return "registerView";
 		}
 		boolean registerUser = userService.registerUser(regDto);
 		if (registerUser) {
-			model.addAttribute("smsg", " user registered");
+			model.addAttribute(AppConstant.SUCC_MSG, messages.get("regSucc"));
 		} else {
-			model.addAttribute("emsg", "Registration failed");
+			model.addAttribute(AppConstant.ERROR_MSG, messages.get("regFail"));
 		}
 //		
-		model.addAttribute("countries", userService.getCountries());
+		
 		return "registerView";
 	}
 
@@ -70,10 +78,11 @@ public class UserController {
 
 	@PostMapping("/login")
 	public String login(LoginDto loginDto, Model model) {
-		
+		Map<String, String> messages = prop.getMessages();
+
 		UserDto user = userService.getUser(loginDto);
 		if (user == null) {
-			model.addAttribute("emsg", "Invalid credential");
+			model.addAttribute(AppConstant.ERROR_MSG, messages.get("invalidCredentials"));
 			return "index";
 		}
 
@@ -85,16 +94,18 @@ public class UserController {
 			resetPwdDto.setEmail(user.getEmail());
 			model.addAttribute("resetPwdDto", resetPwdDto);
 //			model.addAttribute("resetPwdDto", new ResetPwdDto());
-			return "resetPwdView";
+			return AppConstant.RESET_PWD_VIEW;
 		}
 	}
 
 	@PostMapping("/resetPwd")
 	public String resetPwd(ResetPwdDto pwdDto, Model model) {
 
+		Map<String, String> messages = prop.getMessages();
+
 		if ((!pwdDto.getNewPwd().equals(pwdDto.getConfirmPwd()))) {
-			model.addAttribute("emsg", "New Pwd and Confirm Pwd Should be same");
-			return "resetPwdView";
+			model.addAttribute(AppConstant.ERROR_MSG, messages.get("pwdMismatch"));
+			return AppConstant.RESET_PWD_VIEW;
 		}
 
 		UserDto user = userService.getUser(pwdDto.getEmail());
@@ -104,13 +115,13 @@ public class UserController {
 			if (resetPwd) {
 				return "redirect:dashboard";
 			} else {
-				model.addAttribute("emsg", "Pwd Update Failed");
-				return "resetPwdView";
+				model.addAttribute(AppConstant.ERROR_MSG, messages.get(" pwdUpdateErr"));
+				return AppConstant.RESET_PWD_VIEW;
 
 			}
 		} else {
-			model.addAttribute("emsg", "Given Old Pwd  is Wrong");
-			return "resetPwdView";
+			model.addAttribute(AppConstant.ERROR_MSG, messages.get("oldPwdErr"));
+			return AppConstant.RESET_PWD_VIEW;
 		}
 	}
 
