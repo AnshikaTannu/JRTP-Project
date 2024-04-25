@@ -21,7 +21,7 @@ public class ConsellerServiceImpl implements CounsellerService {
 		}else {
 		
 		Counsellers save = counsellerRepo.save(counseller);
-		return save.getCounseller_Id() != null;
+		return save.getCounsellerId() != null;
 	}
 	}
 	@Override

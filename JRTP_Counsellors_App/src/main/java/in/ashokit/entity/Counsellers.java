@@ -17,7 +17,7 @@ import jakarta.persistence.OneToMany;
 public class Counsellers {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer counseller_Id;
+	private Integer counsellerId;
 	private String name;
 
 	private String email;
@@ -35,14 +35,12 @@ public class Counsellers {
 	@OneToMany(mappedBy = "counsellers", cascade = CascadeType.ALL)
 	private List<Enquiries> enquiries;
 
-	
-
-	public Integer getCounseller_Id() {
-		return counseller_Id;
+	public Integer getCounsellerId() {
+		return counsellerId;
 	}
 
-	public void setCounseller_Id(Integer counseller_Id) {
-		this.counseller_Id = counseller_Id;
+	public void setCounsellerId(Integer counsellerId) {
+		this.counsellerId = counsellerId;
 	}
 
 	public String getName() {

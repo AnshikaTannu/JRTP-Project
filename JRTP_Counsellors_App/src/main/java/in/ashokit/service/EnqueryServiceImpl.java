@@ -52,7 +52,7 @@ public class EnqueryServiceImpl implements EnquirieService {
 	@Override
 	public List<Enquiries>getEnquiries(Enquiries enquiries, Integer counsellerId) {
 		Counsellers counsellers = new Counsellers();
-		counsellers.setCounseller_Id(counsellerId);
+		counsellers.setCounsellerId(counsellerId);
 
 		Enquiries searchCriteria = new Enquiries();
 		searchCriteria.setCounsellers(counsellers);
