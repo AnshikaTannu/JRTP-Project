@@ -1,4 +1,4 @@
- package in.ashokit.dto;
+package in.ashokit.dto;
 
 public class UserDto {
 
@@ -63,8 +63,6 @@ public class UserDto {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-
-	
 
 	public String getPwdUpdate() {
 		return pwdUpdate;

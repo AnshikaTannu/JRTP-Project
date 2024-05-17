@@ -5,8 +5,6 @@ public class RegisterDto {
 	private String uname;
 
 	private String email;
-	
-//	private String pwd;
 
 	private Long phno;
 
@@ -15,7 +13,6 @@ public class RegisterDto {
 	private Integer cityId;
 
 	private Integer stateId;
-
 
 	public String getUname() {
 		return uname;
@@ -33,15 +30,6 @@ public class RegisterDto {
 		this.email = email;
 	}
 
-	
-	
-//	public String getPwd() {
-//		return pwd;
-//	}
-//
-//	public void setPwd(String pwd) {
-//		this.pwd = pwd;
-//	}
 
 	public Long getPhno() {
 		return phno;

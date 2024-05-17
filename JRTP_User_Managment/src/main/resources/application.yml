@@ -1,0 +1,30 @@
+server:
+  port: 8085
+spring:
+  datasource:
+    password: root
+    url: jdbc:mysql://localhost:3306/jrtp26
+    username: root
+  jpa:
+    show-sql: true
+  mail:
+    host: smtp.gmail.com
+    password: nukh brxd uemg cevp
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    username: krianshika64611@gmail.com
+app:
+  messages:
+    dupEmail: Duplicate Email
+    regSucc: User Registered
+    regFail: Registration Failed
+    invalidCredentials: Invalid Credentials
+    pwdMismatch: New Pwd and Confirm Pwd Should be same
+    pwdUpdateErr: Pwd update failed
+    oldPwdErr: Given old pwd is wrong   
+    

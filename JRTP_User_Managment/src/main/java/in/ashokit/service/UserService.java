@@ -10,7 +10,7 @@ import in.ashokit.dto.UserDto;
 public interface UserService {
 
 	public UserDto getUser(String email);
-	
+
 	public boolean registerUser(RegisterDto regDto);
 
 	public Map<Integer, String> getCountries();

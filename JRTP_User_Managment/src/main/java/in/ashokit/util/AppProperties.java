@@ -12,8 +12,10 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(value =  "app")
 public class AppProperties {
 	
-	public Map <String ,String> messages=new HashMap<>();
+	public  Map <String ,String> messages=new HashMap<>();
 
+
+	
 	public Map<String, String> getMessages() {
 		return messages;
 	}

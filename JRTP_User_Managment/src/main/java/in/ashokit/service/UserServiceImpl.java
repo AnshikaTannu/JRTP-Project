@@ -1,4 +1,4 @@
-  package in.ashokit.service;
+package in.ashokit.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,22 +45,22 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private EmailUtil emailUtil;
 
+	Random r = new Random();
+
 	private QuoteDto[] quotations = null;
 
 	@Override
 	public UserDto getUser(String email) {
 		User user = userRepo.findByEmail(email);
-//		 UserDto dto = new UserDto(); 
-//		 BeanUtils.copyProperties(user, dto);
-		if(user==null) {
+		if (user == null) {
 			return null;
-			
-		}
-		
-		ModelMapper mapper = new ModelMapper();
-		UserDto userDto = mapper.map(user, UserDto.class);
 
-		return userDto;
+		}
+
+		ModelMapper mapper = new ModelMapper();
+		return  mapper.map(user, UserDto.class);
+
+		
 	}
 
 	@Override
@@ -82,7 +82,6 @@ public class UserServiceImpl implements UserService {
 		entity.setPwd(generateRandom());
 		entity.setPwdUpdate("no");
 
-		// user registration
 		User saveEntity = userRepo.save(entity);
 		String subject = "User Registration";
 
@@ -96,10 +95,10 @@ public class UserServiceImpl implements UserService {
 		Map<Integer, String> countryMap = new HashMap<>();
 
 		List<Country> countryList = countryRepo.findAll();
-		countryList.forEach(c -> {
-			countryMap.put(c.getCountryId(), c.getCountryName());
+		countryList.forEach(c ->
+			countryMap.put(c.getCountryId(), c.getCountryName())
 
-		});
+		);
 		return countryMap;
 	}
 
@@ -107,19 +106,11 @@ public class UserServiceImpl implements UserService {
 	public Map<Integer, String> getStates(Integer cid) {
 
 		Map<Integer, String> statesMap = new HashMap<>();
-		/*
-		 * Country country= new Country(); country.setCountryId(cid);
-		 * 
-		 * State entity= new State(); entity.setCountry(country);
-		 * 
-		 * Example<State> of= Example.of(entity); List<State> stateList =
-		 * stateRepo.findAll(of);
-		 */
 
 		List<State> stateList = stateRepo.getStates(cid);
-		stateList.forEach(s -> {
-			statesMap.put(s.getStateId(), s.getStateName());
-		});
+		stateList.forEach(s -> 
+			statesMap.put(s.getStateId(), s.getStateName())
+		);
 		return statesMap;
 	}
 
@@ -129,9 +120,9 @@ public class UserServiceImpl implements UserService {
 		Map<Integer, String> cityMap = new HashMap<>();
 
 		List<City> cityList = cityRepo.getCities(sid);
-		cityList.forEach(c -> {
-			cityMap.put(c.getCityId(), c.getCityName());
-		});
+		cityList.forEach(c -> 
+			cityMap.put(c.getCityId(), c.getCityName())
+		);
 		return cityMap;
 	}
 
@@ -163,11 +154,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String getQuote() {
-		
-		if(quotations == null) {
+
+		if (quotations == null) {
 			String url = "https://type.fit/api/quotes";
 
-			// web service call
 			RestTemplate rt = new RestTemplate();
 			ResponseEntity<String> forEntity = rt.getForEntity(url, String.class);
 			String responseBody = forEntity.getBody();
@@ -179,19 +169,22 @@ public class UserServiceImpl implements UserService {
 				e.printStackTrace();
 			}
 		}
-
-		Random r= new Random();
-		int index=r.nextInt(quotations.length-1);
+		
+		if(quotations!=null) {
+		int index = r.nextInt(quotations.length - 1);
 
 		return quotations[index].getText();
+	}else {
+		return null;
+	}
 	}
 
-	private static String generateRandom() {
+	private String generateRandom() {
 		String aToZ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
-		Random rand = new Random();
+
 		StringBuilder res = new StringBuilder();
 		for (int i = 0; i < 5; i++) {
-			int randIndex = rand.nextInt(aToZ.length());
+			int randIndex = r.nextInt(aToZ.length());
 			res.append(aToZ.charAt(randIndex));
 		}
 		return res.toString();

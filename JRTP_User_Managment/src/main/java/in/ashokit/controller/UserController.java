@@ -33,7 +33,7 @@ public class UserController {
 		Map<Integer, String> countriesMap = userService.getCountries();
 		model.addAttribute("countries", countriesMap);
 
-		return "registerView";
+		return AppConstant.REG_VIEW;
 	}
 
 	@GetMapping("/states/{cid}")
@@ -57,17 +57,16 @@ public class UserController {
 		UserDto user = userService.getUser(regDto.getEmail());
 		if (user != null) {
 			model.addAttribute(AppConstant.ERROR_MSG, messages.get("dupEmail"));
-			return "registerView";
-		}
-		boolean registerUser = userService.registerUser(regDto);
-		if (registerUser) {
-			model.addAttribute(AppConstant.SUCC_MSG, messages.get("regSucc"));
+
 		} else {
-			model.addAttribute(AppConstant.ERROR_MSG, messages.get("regFail"));
+			boolean registerUser = userService.registerUser(regDto);
+			if (registerUser) {
+				model.addAttribute(AppConstant.SUCC_MSG, messages.get("regSucc"));
+			} else {
+				model.addAttribute(AppConstant.ERROR_MSG, messages.get("regFail"));
+			}
 		}
-//		
-		
-		return "registerView";
+		return AppConstant.REG_VIEW;
 	}
 
 	@GetMapping("/")
@@ -93,7 +92,6 @@ public class UserController {
 			ResetPwdDto resetPwdDto = new ResetPwdDto();
 			resetPwdDto.setEmail(user.getEmail());
 			model.addAttribute("resetPwdDto", resetPwdDto);
-//			model.addAttribute("resetPwdDto", new ResetPwdDto());
 			return AppConstant.RESET_PWD_VIEW;
 		}
 	}
